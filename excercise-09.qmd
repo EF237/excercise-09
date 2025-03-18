@@ -245,7 +245,7 @@ boot.slope.summary <- boot.slope |>
 #Quantile Method
 boot.slope.summary
 
-# Percentil Method
+# Percentile Method
 (CI.percentile <- get_ci(boot.slope, level = 1 - alpha, type = "percentile"))
 
 # Theory Method
@@ -255,4 +255,4 @@ boot.slope.summary
 
 # Do these CIs suggest that your slope coefficient is different from zero?
 
-Yes these CIs suggest that the slope coefficient is different from zero.
+Yes, these CIs suggest that the slope coefficient is different from zero.

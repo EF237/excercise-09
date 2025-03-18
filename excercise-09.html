@@ -745,7 +745,7 @@ Group_size   1.769874  3.156269</code></pre>
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
-1   -0.712    0.968</code></pre>
+1   -0.750    0.861</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_ci</span>(permuted.slope, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> alpha, <span class="at">type =</span> <span class="st">"se"</span>, <span class="at">point_estimate =</span> <span class="fu">pull</span>(permuted.slope.summary,</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    estimate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -753,7 +753,7 @@ Group_size   1.769874  3.156269</code></pre>
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
-1   -0.829    0.832</code></pre>
+1   -0.804    0.759</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>p.value <span class="ot">&lt;-</span> permuted.slope <span class="sc">|&gt;</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">abs_stat =</span> <span class="fu">abs</span>(stat)) <span class="sc">|&gt;</span></span>
@@ -779,7 +779,7 @@ Group_size   1.769874  3.156269</code></pre>
 </section>
 <section id="what-is-it-that-you-need-to-permute-what-is-the-p-value-associated-with-your-original-slope-coefficient" class="level1">
 <h1>What is it that you need to permute? What is the p value associated with your original slope coefficient?</h1>
-<p>We permute the brain size. The p value for the original slope is 7.26e-11 while my permuted p value is 0.</p>
+<p>We permute the brain size. The p value for the original slope is 7.26e-11 while the permuted p value is 0.</p>
 <section id="step-8" class="level2">
 <h2 class="anchored" data-anchor-id="step-8">Step 8</h2>
 <p>Use bootstrapping to generate a 95% CI for your estimate of the slope coefficient using both the quantile method and the theory-based method (i.e., using the standard deviation of the bootstrapped sampling distribution as an estimate of the standard error).</p>
@@ -800,15 +800,15 @@ Group_size   1.769874  3.156269</code></pre>
 <pre><code># A tibble: 1 × 6
   estimate std.error lower upper boot.lower boot.upper
      &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-1     2.39     0.457  1.49  3.29       1.47       3.22</code></pre>
+1     2.40     0.468  1.48  3.33       1.43       3.27</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Percentil Method</span></span>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Percentile Method</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>(CI.percentile <span class="ot">&lt;-</span> <span class="fu">get_ci</span>(boot.slope, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> alpha, <span class="at">type =</span> <span class="st">"percentile"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
-1     1.47     3.22</code></pre>
+1     1.43     3.27</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Theory Method</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>(CI.theory <span class="ot">&lt;-</span> <span class="fu">get_ci</span>(boot.slope, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> alpha, <span class="at">type =</span> <span class="st">"se"</span>, <span class="at">point_estimate =</span> <span class="fu">pull</span>(boot.slope.summary,</span>
@@ -817,14 +817,14 @@ Group_size   1.769874  3.156269</code></pre>
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
-1     1.50     3.29</code></pre>
+1     1.48     3.32</code></pre>
 </div>
 </div>
 </section>
 </section>
 <section id="do-these-cis-suggest-that-your-slope-coefficient-is-different-from-zero" class="level1">
 <h1>Do these CIs suggest that your slope coefficient is different from zero?</h1>
-<p>Yes these CIs suggest that the slope coefficient is different from zero.</p>
+<p>Yes, these CIs suggest that the slope coefficient is different from zero.</p>
 </section>
 
 </main>
