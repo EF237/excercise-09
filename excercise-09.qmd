@@ -1,0 +1,233 @@
+---
+title: "excercise-09"
+author: "Joyradyn"
+format: html
+editor: visual
+---
+
+# Step 1
+
+Load data set and do a quick exploratory data analysis.
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+
+f <- "https://raw.githubusercontent.com/difiore/ada-datasets/main/Street_et_al_2017.csv"
+  
+d <- read_csv(f, col_names = TRUE)
+
+library(skimr)
+
+skim(d)
+```
+
+You can view the five-number summary (median, minimum, maximum, first quartile, and third quartile), along with the mean and standard deviation, for each quantitative variable with the skim() function.
+
+# Step 2
+
+Plot brain size (ECV) as a function of social group size (Group_size), longevity (Longevity), juvenile period length (Weaning), and reproductive lifespan (Repro_lifespan).
+
+```{r, message=FALSE, warning=FALSE}
+par(mfrow = c(2,2))
+  
+ # Group_size
+plot(d$Group_size, d$ECV, main = "ECV vs Group Size",
+     xlab = "Group Size", ylab = "ECV")
+
+ # Longevity
+plot(d$Longevity, d$ECV, main = "ECV vs Longevity",
+     xlab = "Longevity", ylab = "ECV")
+
+  # Weaning
+plot(d$Weaning, d$ECV, main = "ECV vs Weaning Period",
+     xlab = "Weaning Period", ylab = "ECV")
+
+  # Reproductive Lifespan
+plot(d$Repro_lifespan, d$ECV, main = "ECV vs Reproductive Lifespan",
+     xlab = "Reproductive Lifespan", ylab = "ECV")
+```
+
+# Step 3
+
+By hand derive the ordinary least squares regression coefficients Beta1 and Beta0 for ECV as a function of social group size.
+
+```{r, message=FALSE, warning=FALSE}
+EG <- na.omit(d[, c("ECV", "Group_size")])
+
+  # beta 1 by hand (3 options)
+(beta1 <- sum((EG$ECV - mean(EG$ECV)) * (EG$Group_size - mean(EG$Group_size)))/sum((EG$Group_size - mean(EG$Group_size))^2))
+#or
+(beta1 <- cov(EG$Group_size, EG$ECV)/var(EG$Group_size))
+#or
+(beta1 <- cor(EG$Group_size, EG$ECV) * (sd(EG$ECV)/sd(EG$Group_size)))
+  # output - 2.463071
+
+  # beta0 by hand
+(beta0 <- mean(EG$ECV) - beta1 * mean(EG$Group_size))
+ #ouput - 30.35652
+```
+
+# Step 4
+
+Confirm your results via `lm()` function.
+
+```{r, message=FALSE, warning=FALSE}
+(m <- lm(ECV ~ Group_size, data = EG))
+
+summary(m)
+
+par(mfrow = c(2,2))
+
+plot(m)
+```
+
+We can confirm that our hand-derived functions are correct because the `lm()` function produces the same values for both Beta1 and Beta0.
+
+# Step 5
+
+Repeat the analysis above for three different major radiations of primates - “catarrhines”, “platyrrhines”, and “strepsirhines”) separately.
+
+```{r, message=FALSE, warning=FALSE}
+  # Catarrhini
+c = d |>
+  filter (Taxonomic_group == "Catarrhini")
+
+(c.m <- lm(ECV ~ Group_size, data = c))
+
+summary(c.m)
+
+par(mfrow = c(2,2))
+
+plot(c.m)
+
+  # Platyrrhini
+p = d |>
+  filter (Taxonomic_group == "Platyrrhini")
+
+(p.m <- lm(ECV ~ Group_size, data = p))
+
+summary(p.m)
+
+par(mfrow = c(2,2))
+
+plot(p.m)
+
+  # Strepsirhini
+s = d |>
+  filter (Taxonomic_group == "Strepsirhini")
+
+(s.m <- lm(ECV ~ Group_size, data = s))
+
+summary(s.m)
+
+par(mfrow = c(2,2))
+
+plot(s.m)
+```
+
+## Do your regression coefficients differ among groups? How might you determine this?
+
+Yes, it changes for each group, as shown in the summary and by comparing the graphs.
+
+# Step 6
+
+For your first regression of ECV on social group size, calculate the standard error for the slope coefficient, the 95% CI, and the p value associated with this coefficient by hand. Also extract this same information from the results of running the `lm()` function. Note that Beta1 & Beta0 where both previously created by hand in Step 3.
+
+## 1. Standard error for the slope coefficient
+
+```{r, message=FALSE, warning=FALSE}
+X <- EG$Group_size
+Y <- EG$ECV
+n <- length(X)
+X_mean <- mean(X)
+Y_mean <- mean(Y)
+predict <- beta0 + beta1 * X
+residuals <- Y - predict
+
+
+(stderror <- sqrt((sum(residuals^2)) / (n - 2)) / sqrt(sum((X - X_mean)^2)))
+```
+
+## 2. 95% CI
+
+```{r, message=FALSE, warning=FALSE}
+t_critical <- qt(0.975, (n-2)) 
+
+(lower <- beta1 - t_critical * stderror)
+(upper <- beta1 + t_critical * stderror)
+```
+
+## 3. p value associated with this coefficient
+
+```{r, message=FALSE, warning=FALSE}
+t_stat <- beta1 / stderror
+
+(p <- 2 * (1 - pt(abs(t_stat), (n-2))))
+```
+
+## Confirmation
+
+```{r, message=FALSE, warning=FALSE}
+m2 <- lm(ECV ~ Group_size, data = EG)
+
+# 1. 
+summary(m)$coefficients["Group_size", "Std. Error"]
+
+# 2.
+confint(m)
+
+# 3.
+summary(m)$coefficients["Group_size", "Pr(>|t|)"]
+```
+
+# Step 7
+
+Use a permutation approach with 1000 permutations to generate a null sampling distribution for the slope coefficient.
+
+```{r, message=FALSE, warning=FALSE}
+n_perm <- 1000
+
+perm <- vector(length = n_perm)
+
+for (i in 1:n) {
+  perm_ECV <- sample(EG$ECV) 
+  
+  perm_model <- lm(perm_ECV ~ EG$Group_size, data = EG)
+  
+  perm[i] <- coef(perm_model)[2]
+}
+
+print(perm)
+```
+
+## What is it that you need to permute? What is the p value associated with your original slope coefficient?
+
+Permute the brain size. The p value for my original slope is 7.26e-11 while my perm value is 0.
+
+# Step 8
+
+Use bootstrapping to generate a 95% CI for your estimate of the slope coefficient using both the quantile method and the theory-based method (i.e., using the standard deviation of the bootstrapped sampling distribution as an estimate of the standard error).
+
+```{r, message=FALSE, warning=FALSE}
+n_boot <- 1000
+
+boot_slopes <- numeric(n_boot) 
+
+n <- nrow(EG) 
+
+for (i in 1:n_boot) {
+  boot <- EG[sample(1:n, size = n, replace = TRUE), ]
+  boot_model <- lm(ECV ~ Group_size, data = boot)
+  boot_slopes[i] <- coef(boot_model)[2]
+}
+
+# Quantile Method
+(ci_quantile <- quantile(boot_slopes, probs = c(0.025, 0.975)))
+
+# Theory Method
+(ci_theory <- c(beta1 - 1.96 * (sd(boot_slopes)), beta1 + 1.96 * (sd(boot_slopes))))
+```
+
+## Do these CIs suggest that your slope coefficient is different from zero?
+
+Yes they both suggest this.
