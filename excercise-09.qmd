@@ -5,9 +5,9 @@ format: html
 editor: visual
 ---
 
-# Step 1
+## Step 1
 
-Load data set and do a quick exploratory data analysis.
+Load data set and do a quick exploratory data analysis.You can view the five-number summary (median, minimum, maximum, first quartile, and third quartile), along with the mean and standard deviation, for each quantitative variable with the `skim()` function.
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -21,9 +21,7 @@ library(skimr)
 skim(d)
 ```
 
-You can view the five-number summary (median, minimum, maximum, first quartile, and third quartile), along with the mean and standard deviation, for each quantitative variable with the skim() function.
-
-# Step 2
+## Step 2
 
 Plot brain size (ECV) as a function of social group size (Group_size), longevity (Longevity), juvenile period length (Weaning), and reproductive lifespan (Repro_lifespan).
 
@@ -47,7 +45,7 @@ plot(d$Repro_lifespan, d$ECV, main = "ECV vs Reproductive Lifespan",
      xlab = "Reproductive Lifespan", ylab = "ECV")
 ```
 
-# Step 3
+## Step 3
 
 By hand derive the ordinary least squares regression coefficients Beta1 and Beta0 for ECV as a function of social group size.
 
@@ -60,14 +58,12 @@ EG <- na.omit(d[, c("ECV", "Group_size")])
 (beta1 <- cov(EG$Group_size, EG$ECV)/var(EG$Group_size))
 #or
 (beta1 <- cor(EG$Group_size, EG$ECV) * (sd(EG$ECV)/sd(EG$Group_size)))
-  # output - 2.463071
 
   # beta0 by hand
 (beta0 <- mean(EG$ECV) - beta1 * mean(EG$Group_size))
- #ouput - 30.35652
 ```
 
-# Step 4
+## Step 4
 
 Confirm your results via `lm()` function.
 
@@ -81,9 +77,9 @@ par(mfrow = c(2,2))
 plot(m)
 ```
 
-We can confirm that our hand-derived functions are correct because the `lm()` function produces the same values for both Beta1 and Beta0.
+*We can confirm that our hand-derived functions are correct because the `lm()` function produces the same values for both Beta1 and Beta0.*
 
-# Step 5
+## Step 5
 
 Repeat the analysis above for three different major radiations of primates - “catarrhines”, “platyrrhines”, and “strepsirhines”) separately.
 
@@ -125,15 +121,15 @@ par(mfrow = c(2,2))
 plot(s.m)
 ```
 
-## Do your regression coefficients differ among groups? How might you determine this?
+# Do your regression coefficients differ among groups? How might you determine this?
 
 Yes, it changes for each group, as shown in the summary and by comparing the graphs.
 
-# Step 6
+## Step 6
 
 For your first regression of ECV on social group size, calculate the standard error for the slope coefficient, the 95% CI, and the p value associated with this coefficient by hand. Also extract this same information from the results of running the `lm()` function. Note that Beta1 & Beta0 where both previously created by hand in Step 3.
 
-## 1. Standard error for the slope coefficient
+# 1. Standard error for the slope coefficient
 
 ```{r, message=FALSE, warning=FALSE}
 X <- EG$Group_size
@@ -148,7 +144,7 @@ residuals <- Y - predict
 (stderror <- sqrt((sum(residuals^2)) / (n - 2)) / sqrt(sum((X - X_mean)^2)))
 ```
 
-## 2. 95% CI
+# 2. 95% CI
 
 ```{r, message=FALSE, warning=FALSE}
 t_critical <- qt(0.975, (n-2)) 
@@ -157,7 +153,7 @@ t_critical <- qt(0.975, (n-2))
 (upper <- beta1 + t_critical * stderror)
 ```
 
-## 3. p value associated with this coefficient
+# 3. p value associated with this coefficient
 
 ```{r, message=FALSE, warning=FALSE}
 t_stat <- beta1 / stderror
@@ -165,69 +161,98 @@ t_stat <- beta1 / stderror
 (p <- 2 * (1 - pt(abs(t_stat), (n-2))))
 ```
 
-## Confirmation
+# Confirmation
 
 ```{r, message=FALSE, warning=FALSE}
 m2 <- lm(ECV ~ Group_size, data = EG)
 
-# 1. 
+# Standard error for the slope coefficient
 summary(m)$coefficients["Group_size", "Std. Error"]
 
-# 2.
+# 95% CI
 confint(m)
 
-# 3.
+# p value associated with this coefficient
 summary(m)$coefficients["Group_size", "Pr(>|t|)"]
 ```
 
-# Step 7
+## Step 7
 
 Use a permutation approach with 1000 permutations to generate a null sampling distribution for the slope coefficient.
 
 ```{r, message=FALSE, warning=FALSE}
-n_perm <- 1000
+library(broom)
+library(infer)
 
-perm <- vector(length = n_perm)
+alpha <- 0.05
+confidence_level <- 1 - alpha
+p_lower <- alpha/2
+p_upper <- 1 - (alpha/2)
+degrees_of_freedom <- nrow(EG) - 2
+critical_value <- qt(p_upper, df = degrees_of_freedom)
 
-for (i in 1:n) {
-  perm_ECV <- sample(EG$ECV) 
-  
-  perm_model <- lm(perm_ECV ~ EG$Group_size, data = EG)
-  
-  perm[i] <- coef(perm_model)[2]
-}
+original.slope <- lm(data = EG, ECV ~ Group_size) |>
+  tidy(conf.int = TRUE, conf.level = confidence_level) |>
+  mutate(lower = estimate - std.error * critical_value, upper = estimate + std.error *
+    critical_value) |>
+  filter(term == "Group_size")
 
-print(perm)
+permuted.slope <- EG |>
+specify(ECV ~ Group_size) |>
+hypothesize(null = "independence") |>
+generate(reps = 1000, type = "permute") |>
+calculate(stat = "slope")
+
+permuted.slope.summary <- permuted.slope |>
+  summarize(estimate = mean(stat), std.error = sd(stat), lower = estimate - std.error *
+    critical_value, upper = estimate + std.error * critical_value, perm.lower = quantile(stat,
+    p_lower), perm.upper = quantile(stat, p_upper))
+
+get_ci(permuted.slope, level = 1 - alpha, type = "percentile")
+
+get_ci(permuted.slope, level = 1 - alpha, type = "se", point_estimate = pull(permuted.slope.summary,
+    estimate))
+
+p.value <- permuted.slope |>
+  mutate(abs_stat = abs(stat)) |>
+  summarize(estimate = mean(abs_stat >= abs(pull(original.slope, estimate))))
+
+p.value
+
+(p.value <- permuted.slope |>
+    get_p_value(obs_stat = original.slope$estimate, direction = "two_sided"))
 ```
 
-## What is it that you need to permute? What is the p value associated with your original slope coefficient?
+# What is it that you need to permute? What is the p value associated with your original slope coefficient?
 
-Permute the brain size. The p value for my original slope is 7.26e-11 while my perm value is 0.
+We permute the brain size. The p value for the original slope is 7.26e-11 while the permuted p value is 0.
 
-# Step 8
+## Step 8
 
 Use bootstrapping to generate a 95% CI for your estimate of the slope coefficient using both the quantile method and the theory-based method (i.e., using the standard deviation of the bootstrapped sampling distribution as an estimate of the standard error).
 
 ```{r, message=FALSE, warning=FALSE}
-n_boot <- 1000
+boot.slope <- EG |>
+  specify(ECV ~ Group_size) |>
+  generate(reps = 1000, type = "bootstrap") |>
+  calculate(stat = "slope")
 
-boot_slopes <- numeric(n_boot) 
+boot.slope.summary <- boot.slope |>
+  summarize(estimate = mean(stat), std.error = sd(stat), lower = estimate - std.error *
+    critical_value, upper = estimate + std.error * critical_value, boot.lower = quantile(stat,
+    p_lower), boot.upper = quantile(stat, p_upper))
 
-n <- nrow(EG) 
+#Quantile Method
+boot.slope.summary
 
-for (i in 1:n_boot) {
-  boot <- EG[sample(1:n, size = n, replace = TRUE), ]
-  boot_model <- lm(ECV ~ Group_size, data = boot)
-  boot_slopes[i] <- coef(boot_model)[2]
-}
-
-# Quantile Method
-(ci_quantile <- quantile(boot_slopes, probs = c(0.025, 0.975)))
+# Percentil Method
+(CI.percentile <- get_ci(boot.slope, level = 1 - alpha, type = "percentile"))
 
 # Theory Method
-(ci_theory <- c(beta1 - 1.96 * (sd(boot_slopes)), beta1 + 1.96 * (sd(boot_slopes))))
+(CI.theory <- get_ci(boot.slope, level = 1 - alpha, type = "se", point_estimate = pull(boot.slope.summary,
+    estimate)))
 ```
 
-## Do these CIs suggest that your slope coefficient is different from zero?
+# Do these CIs suggest that your slope coefficient is different from zero?
 
-Yes they both suggest this.
+Yes these CIs suggest that the slope coefficient is different from zero.

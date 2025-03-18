@@ -103,9 +103,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="step-1" class="level1">
-<h1>Step 1</h1>
-<p>Load data set and do a quick exploratory data analysis.</p>
+<section id="step-1" class="level2">
+<h2 class="anchored" data-anchor-id="step-1">Step 1</h2>
+<p>Load data set and do a quick exploratory data analysis.You can view the five-number summary (median, minimum, maximum, first quartile, and third quartile), along with the mean and standard deviation, for each quantitative variable with the <code>skim()</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -383,10 +383,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<p>You can view the five-number summary (median, minimum, maximum, first quartile, and third quartile), along with the mean and standard deviation, for each quantitative variable with the skim() function.</p>
 </section>
-<section id="step-2" class="level1">
-<h1>Step 2</h1>
+<section id="step-2" class="level2">
+<h2 class="anchored" data-anchor-id="step-2">Step 2</h2>
 <p>Plot brain size (ECV) as a function of social group size (Group_size), longevity (Longevity), juvenile period length (Weaning), and reproductive lifespan (Repro_lifespan).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
@@ -415,8 +414,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="step-3" class="level1">
-<h1>Step 3</h1>
+<section id="step-3" class="level2">
+<h2 class="anchored" data-anchor-id="step-3">Step 3</h2>
 <p>By hand derive the ordinary least squares regression coefficients Beta1 and Beta0 for ECV as a function of social group size.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>EG <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(d[, <span class="fu">c</span>(<span class="st">"ECV"</span>, <span class="st">"Group_size"</span>)])</span>
@@ -436,21 +435,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.463071</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># output - 2.463071</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># beta0 by hand</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>(beta0 <span class="ot">&lt;-</span> <span class="fu">mean</span>(EG<span class="sc">$</span>ECV) <span class="sc">-</span> beta1 <span class="sc">*</span> <span class="fu">mean</span>(EG<span class="sc">$</span>Group_size))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># beta0 by hand</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>(beta0 <span class="ot">&lt;-</span> <span class="fu">mean</span>(EG<span class="sc">$</span>ECV) <span class="sc">-</span> beta1 <span class="sc">*</span> <span class="fu">mean</span>(EG<span class="sc">$</span>Group_size))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 30.35652</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a> <span class="co">#ouput - 30.35652</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-4" class="level1">
-<h1>Step 4</h1>
+<section id="step-4" class="level2">
+<h2 class="anchored" data-anchor-id="step-4">Step 4</h2>
 <p>Confirm your results via <code>lm()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(m <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> EG))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(m <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> EG))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -460,7 +456,7 @@ Coefficients:
 (Intercept)   Group_size  
      30.357        2.463  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -481,9 +477,9 @@ Residual standard error: 60.31 on 149 degrees of freedom
 Multiple R-squared:  0.2486,    Adjusted R-squared:  0.2436 
 F-statistic:  49.3 on 1 and 149 DF,  p-value: 7.259e-11</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -492,17 +488,17 @@ F-statistic:  49.3 on 1 and 149 DF,  p-value: 7.259e-11</code></pre>
 </div>
 </div>
 </div>
-<p>We can confirm that our hand-derived functions are correct because the <code>lm()</code> function produces the same values for both Beta1 and Beta0.</p>
+<p><em>We can confirm that our hand-derived functions are correct because the <code>lm()</code> function produces the same values for both Beta1 and Beta0.</em></p>
 </section>
-<section id="step-5" class="level1">
-<h1>Step 5</h1>
+<section id="step-5" class="level2">
+<h2 class="anchored" data-anchor-id="step-5">Step 5</h2>
 <p>Repeat the analysis above for three different major radiations of primates - “catarrhines”, “platyrrhines”, and “strepsirhines”) separately.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Catarrhini</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> d <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span> (Taxonomic_group <span class="sc">==</span> <span class="st">"Catarrhini"</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>(c.m <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> c))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Catarrhini</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> d <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span> (Taxonomic_group <span class="sc">==</span> <span class="st">"Catarrhini"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>(c.m <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> c))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -512,7 +508,7 @@ Coefficients:
 (Intercept)   Group_size  
      83.421        1.146  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(c.m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(c.m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -534,9 +530,9 @@ Residual standard error: 76.02 on 68 degrees of freedom
 Multiple R-squared:  0.0545,    Adjusted R-squared:  0.0406 
 F-statistic:  3.92 on 1 and 68 DF,  p-value: 0.05177</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(c.m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(c.m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -544,11 +540,11 @@ F-statistic:  3.92 on 1 and 68 DF,  p-value: 0.05177</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Platyrrhini</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> d <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span> (Taxonomic_group <span class="sc">==</span> <span class="st">"Platyrrhini"</span>)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>(p.m <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> p))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Platyrrhini</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> d <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span> (Taxonomic_group <span class="sc">==</span> <span class="st">"Platyrrhini"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>(p.m <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> p))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -558,7 +554,7 @@ Coefficients:
 (Intercept)   Group_size  
      16.181        1.965  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(p.m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(p.m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -580,9 +576,9 @@ Residual standard error: 26.98 on 33 degrees of freedom
 Multiple R-squared:  0.3607,    Adjusted R-squared:  0.3414 
 F-statistic: 18.62 on 1 and 33 DF,  p-value: 0.0001364</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p.m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p.m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -590,11 +586,11 @@ F-statistic: 18.62 on 1 and 33 DF,  p-value: 0.0001364</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Strepsirhini</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>s <span class="ot">=</span> d <span class="sc">|&gt;</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span> (Taxonomic_group <span class="sc">==</span> <span class="st">"Strepsirhini"</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>(s.m <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> s))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Strepsirhini</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>s <span class="ot">=</span> d <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span> (Taxonomic_group <span class="sc">==</span> <span class="st">"Strepsirhini"</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>(s.m <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> s))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -604,7 +600,7 @@ Coefficients:
 (Intercept)   Group_size  
       8.176        1.841  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(s.m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(s.m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -626,9 +622,9 @@ Residual standard error: 10.37 on 44 degrees of freedom
 Multiple R-squared:  0.2562,    Adjusted R-squared:  0.2393 
 F-statistic: 15.15 on 1 and 44 DF,  p-value: 0.0003324</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(s.m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(s.m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -637,340 +633,198 @@ F-statistic: 15.15 on 1 and 44 DF,  p-value: 0.0003324</code></pre>
 </div>
 </div>
 </div>
-<section id="do-your-regression-coefficients-differ-among-groups-how-might-you-determine-this" class="level2">
-<h2 class="anchored" data-anchor-id="do-your-regression-coefficients-differ-among-groups-how-might-you-determine-this">Do your regression coefficients differ among groups? How might you determine this?</h2>
+</section>
+<section id="do-your-regression-coefficients-differ-among-groups-how-might-you-determine-this" class="level1">
+<h1>Do your regression coefficients differ among groups? How might you determine this?</h1>
 <p>Yes, it changes for each group, as shown in the summary and by comparing the graphs.</p>
-</section>
-</section>
-<section id="step-6" class="level1">
-<h1>Step 6</h1>
+<section id="step-6" class="level2">
+<h2 class="anchored" data-anchor-id="step-6">Step 6</h2>
 <p>For your first regression of ECV on social group size, calculate the standard error for the slope coefficient, the 95% CI, and the p value associated with this coefficient by hand. Also extract this same information from the results of running the <code>lm()</code> function. Note that Beta1 &amp; Beta0 where both previously created by hand in Step 3.</p>
-<section id="standard-error-for-the-slope-coefficient" class="level2">
-<h2 class="anchored" data-anchor-id="standard-error-for-the-slope-coefficient">1. Standard error for the slope coefficient</h2>
+</section>
+</section>
+<section id="standard-error-for-the-slope-coefficient" class="level1">
+<h1>1. Standard error for the slope coefficient</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> EG<span class="sc">$</span>Group_size</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> EG<span class="sc">$</span>ECV</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(X)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>X_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(X)</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>Y_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(Y)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>predict <span class="ot">&lt;-</span> beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> X</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> Y <span class="sc">-</span> predict</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>(stderror <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="fu">sum</span>(residuals<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">2</span>)) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((X <span class="sc">-</span> X_mean)<span class="sc">^</span><span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> EG<span class="sc">$</span>Group_size</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> EG<span class="sc">$</span>ECV</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(X)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>X_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(X)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>Y_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(Y)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>predict <span class="ot">&lt;-</span> beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> X</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> Y <span class="sc">-</span> predict</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>(stderror <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="fu">sum</span>(residuals<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">2</span>)) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>((X <span class="sc">-</span> X_mean)<span class="sc">^</span><span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3508061</code></pre>
 </div>
 </div>
 </section>
-<section id="ci" class="level2">
-<h2 class="anchored" data-anchor-id="ci">2. 95% CI</h2>
+<section id="ci" class="level1">
+<h1>2. 95% CI</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>t_critical <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, (n<span class="dv">-2</span>)) </span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>(lower <span class="ot">&lt;-</span> beta1 <span class="sc">-</span> t_critical <span class="sc">*</span> stderror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>t_critical <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, (n<span class="dv">-2</span>)) </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>(lower <span class="ot">&lt;-</span> beta1 <span class="sc">-</span> t_critical <span class="sc">*</span> stderror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.769874</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>(upper <span class="ot">&lt;-</span> beta1 <span class="sc">+</span> t_critical <span class="sc">*</span> stderror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>(upper <span class="ot">&lt;-</span> beta1 <span class="sc">+</span> t_critical <span class="sc">*</span> stderror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.156269</code></pre>
 </div>
 </div>
 </section>
-<section id="p-value-associated-with-this-coefficient" class="level2">
-<h2 class="anchored" data-anchor-id="p-value-associated-with-this-coefficient">3. p value associated with this coefficient</h2>
+<section id="p-value-associated-with-this-coefficient" class="level1">
+<h1>3. p value associated with this coefficient</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>t_stat <span class="ot">&lt;-</span> beta1 <span class="sc">/</span> stderror</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>(p <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>(<span class="fu">abs</span>(t_stat), (n<span class="dv">-2</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>t_stat <span class="ot">&lt;-</span> beta1 <span class="sc">/</span> stderror</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>(p <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>(<span class="fu">abs</span>(t_stat), (n<span class="dv">-2</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.259437e-11</code></pre>
 </div>
 </div>
 </section>
-<section id="confirmation" class="level2">
-<h2 class="anchored" data-anchor-id="confirmation">Confirmation</h2>
+<section id="confirmation" class="level1">
+<h1>Confirmation</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> EG)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. </span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)<span class="sc">$</span>coefficients[<span class="st">"Group_size"</span>, <span class="st">"Std. Error"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> EG)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard error for the slope coefficient</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)<span class="sc">$</span>coefficients[<span class="st">"Group_size"</span>, <span class="st">"Std. Error"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3508061</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% CI</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %    97.5 %
 (Intercept) 16.926896 43.786153
 Group_size   1.769874  3.156269</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3.</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)<span class="sc">$</span>coefficients[<span class="st">"Group_size"</span>, <span class="st">"Pr(&gt;|t|)"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p value associated with this coefficient</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)<span class="sc">$</span>coefficients[<span class="st">"Group_size"</span>, <span class="st">"Pr(&gt;|t|)"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.259435e-11</code></pre>
 </div>
 </div>
-</section>
-</section>
-<section id="step-7" class="level1">
-<h1>Step 7</h1>
+<section id="step-7" class="level2">
+<h2 class="anchored" data-anchor-id="step-7">Step 7</h2>
 <p>Use a permutation approach with 1000 permutations to generate a null sampling distribution for the slope coefficient.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>n_perm <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>perm <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> n_perm)</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  perm_ECV <span class="ot">&lt;-</span> <span class="fu">sample</span>(EG<span class="sc">$</span>ECV) </span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  perm_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(perm_ECV <span class="sc">~</span> EG<span class="sc">$</span>Group_size, <span class="at">data =</span> EG)</span>
-<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  perm[i] <span class="ot">&lt;-</span> <span class="fu">coef</span>(perm_model)[<span class="dv">2</span>]</span>
-<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(perm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>confidence_level <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> alpha</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>p_lower <span class="ot">&lt;-</span> alpha<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>p_upper <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (alpha<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>degrees_of_freedom <span class="ot">&lt;-</span> <span class="fu">nrow</span>(EG) <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>critical_value <span class="ot">&lt;-</span> <span class="fu">qt</span>(p_upper, <span class="at">df =</span> degrees_of_freedom)</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>original.slope <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> EG, ECV <span class="sc">~</span> Group_size) <span class="sc">|&gt;</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> confidence_level) <span class="sc">|&gt;</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lower =</span> estimate <span class="sc">-</span> std.error <span class="sc">*</span> critical_value, <span class="at">upper =</span> estimate <span class="sc">+</span> std.error <span class="sc">*</span></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>    critical_value) <span class="sc">|&gt;</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"Group_size"</span>)</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>permuted.slope <span class="ot">&lt;-</span> EG <span class="sc">|&gt;</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="fu">specify</span>(ECV <span class="sc">~</span> Group_size) <span class="sc">|&gt;</span></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a><span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"slope"</span>)</span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a>permuted.slope.summary <span class="ot">&lt;-</span> permuted.slope <span class="sc">|&gt;</span></span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">estimate =</span> <span class="fu">mean</span>(stat), <span class="at">std.error =</span> <span class="fu">sd</span>(stat), <span class="at">lower =</span> estimate <span class="sc">-</span> std.error <span class="sc">*</span></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a>    critical_value, <span class="at">upper =</span> estimate <span class="sc">+</span> std.error <span class="sc">*</span> critical_value, <span class="at">perm.lower =</span> <span class="fu">quantile</span>(stat,</span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a>    p_lower), <span class="at">perm.upper =</span> <span class="fu">quantile</span>(stat, p_upper))</span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a><span class="fu">get_ci</span>(permuted.slope, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> alpha, <span class="at">type =</span> <span class="st">"percentile"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   [1] -0.2764007838 -0.2443797544  0.3126082233 -0.0579018812 -0.6504591499
-   [6]  0.7480314668 -0.0043506762  0.2728841149  0.0492864596  0.0358752303
-  [11]  0.1532109558  0.8113502022 -0.2453735566 -0.3896650684 -0.5303021400
-  [16]  0.8339093304  0.1583330518 -0.5079080563 -0.2174467702 -0.1815361245
-  [21]  0.2396472167  0.7198851342  0.0951454453  0.0754132006  0.0701563896
-  [26]  1.2058815763 -0.6594014918 -0.5143184195  0.2414089654  0.1900629825
-  [31] -0.4211278527 -0.7572327735 -0.3432455877  0.0801997440  0.6158355648
-  [36] -0.1827440768  0.3100694276  0.2810773541 -0.3175690694 -0.3806210475
-  [41] -0.2135261478  0.3818369277  0.2829352674 -0.3968493153  1.0537686278
-  [46]  0.3711119803 -0.0374024681 -0.1166071356 -0.3822119158 -0.2706175626
-  [51]  0.2234973353  0.0521233401 -0.6917314996 -0.4391879839  0.1286875836
-  [56] -0.2408390879 -0.3742486089  0.4291942879  0.4487770842 -0.1903611405
-  [61] -0.1838650158  0.1374750303 -0.9007321665 -0.6664530198  0.2356490199
-  [66]  0.1029066967 -0.7367561117 -0.2305295851  0.2531126939 -0.1522699185
-  [71] -0.5289946908 -0.3495626450 -0.1373204113  0.1045975525 -0.6254737987
-  [76] -0.4529956446 -0.0876074502 -0.0562110084  0.5691824304 -0.0003554565
-  [81] -0.0603553551  0.1189750793 -0.0335501336 -0.4684993035 -0.1545302345
-  [86]  0.3026907878  0.2432310009 -0.6794571269  1.1262298492  0.5218657858
-  [91] -0.1927192956 -0.0722641671  1.5959862841 -0.8606384208 -0.3152434597
-  [96]  0.3343540883 -0.4912745271 -0.4786049915 -0.1687900802 -0.3706912975
- [101] -0.5602899609  0.3564370284  0.1750715925  0.0237241885  0.1286672512
- [106] -0.2463321069  0.5554521750  0.2480328866  0.5801748625  0.6178641385
- [111]  0.0887392773 -0.1582360977 -0.1421134671 -0.1637174788 -0.2358087922
- [116] -0.1883489580  0.2343357517 -0.1447886355 -0.3838729835  0.0327797965
- [121] -0.3990985685  0.2432120724 -0.3203816255 -0.3239492722  0.9192841441
- [126] -0.5122230127 -0.1082712480  0.6552866402  0.1786517567 -0.5038158432
- [131]  0.2989365462  0.1517533815 -0.0131512493 -0.1629573981 -0.2317683743
- [136]  0.1046045217 -0.2082983976  0.0384877438 -0.0396881573  0.3580130450
- [141]  0.4333392435  0.0641242569  0.8663976165 -0.4075879811  0.4994647499
- [146]  0.0175073217 -0.1128918673 -0.7500771644  0.1720553739  0.6259801246
- [151] -0.3213202324  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [156]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [161]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [166]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [171]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [176]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [181]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [186]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [191]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [196]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [201]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [206]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [211]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [216]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [221]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [226]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [231]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [236]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [241]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [246]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [251]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [256]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [261]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [266]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [271]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [276]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [281]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [286]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [291]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [296]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [301]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [306]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [311]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [316]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [321]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [326]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [331]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [336]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [341]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [346]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [351]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [356]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [361]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [366]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [371]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [376]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [381]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [386]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [391]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [396]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [401]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [406]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [411]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [416]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [421]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [426]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [431]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [436]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [441]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [446]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [451]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [456]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [461]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [466]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [471]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [476]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [481]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [486]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [491]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [496]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [501]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [506]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [511]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [516]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [521]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [526]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [531]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [536]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [541]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [546]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [551]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [556]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [561]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [566]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [571]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [576]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [581]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [586]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [591]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [596]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [601]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [606]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [611]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [616]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [621]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [626]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [631]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [636]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [641]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [646]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [651]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [656]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [661]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [666]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [671]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [676]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [681]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [686]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [691]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [696]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [701]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [706]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [711]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [716]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [721]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [726]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [731]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [736]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [741]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [746]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [751]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [756]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [761]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [766]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [771]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [776]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [781]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [786]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [791]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [796]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [801]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [806]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [811]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [816]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [821]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [826]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [831]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [836]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [841]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [846]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [851]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [856]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [861]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [866]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [871]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [876]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [881]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [886]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [891]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [896]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [901]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [906]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [911]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [916]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [921]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [926]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [931]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [936]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [941]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [946]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [951]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [956]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [961]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [966]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [971]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [976]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [981]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [986]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [991]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
- [996]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000</code></pre>
+<pre><code># A tibble: 1 × 2
+  lower_ci upper_ci
+     &lt;dbl&gt;    &lt;dbl&gt;
+1   -0.712    0.968</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_ci</span>(permuted.slope, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> alpha, <span class="at">type =</span> <span class="st">"se"</span>, <span class="at">point_estimate =</span> <span class="fu">pull</span>(permuted.slope.summary,</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    estimate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  lower_ci upper_ci
+     &lt;dbl&gt;    &lt;dbl&gt;
+1   -0.829    0.832</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>p.value <span class="ot">&lt;-</span> permuted.slope <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">abs_stat =</span> <span class="fu">abs</span>(stat)) <span class="sc">|&gt;</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">estimate =</span> <span class="fu">mean</span>(abs_stat <span class="sc">&gt;=</span> <span class="fu">abs</span>(<span class="fu">pull</span>(original.slope, estimate))))</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  estimate
+     &lt;dbl&gt;
+1        0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>(p.value <span class="ot">&lt;-</span> permuted.slope <span class="sc">|&gt;</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> original.slope<span class="sc">$</span>estimate, <span class="at">direction =</span> <span class="st">"two_sided"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  p_value
+    &lt;dbl&gt;
+1       0</code></pre>
 </div>
 </div>
-<section id="what-is-it-that-you-need-to-permute-what-is-the-p-value-associated-with-your-original-slope-coefficient" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-it-that-you-need-to-permute-what-is-the-p-value-associated-with-your-original-slope-coefficient">What is it that you need to permute? What is the p value associated with your original slope coefficient?</h2>
-<p>Permute the brain size. The p value for my original slope is 7.26e-11 while my perm value is 0.</p>
 </section>
 </section>
-<section id="step-8" class="level1">
-<h1>Step 8</h1>
+<section id="what-is-it-that-you-need-to-permute-what-is-the-p-value-associated-with-your-original-slope-coefficient" class="level1">
+<h1>What is it that you need to permute? What is the p value associated with your original slope coefficient?</h1>
+<p>We permute the brain size. The p value for the original slope is 7.26e-11 while my permuted p value is 0.</p>
+<section id="step-8" class="level2">
+<h2 class="anchored" data-anchor-id="step-8">Step 8</h2>
 <p>Use bootstrapping to generate a 95% CI for your estimate of the slope coefficient using both the quantile method and the theory-based method (i.e., using the standard deviation of the bootstrapped sampling distribution as an estimate of the standard error).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>n_boot <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>boot_slopes <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_boot) </span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(EG) </span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_boot) {</span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  boot <span class="ot">&lt;-</span> EG[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>), ]</span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  boot_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECV <span class="sc">~</span> Group_size, <span class="at">data =</span> boot)</span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  boot_slopes[i] <span class="ot">&lt;-</span> <span class="fu">coef</span>(boot_model)[<span class="dv">2</span>]</span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantile Method</span></span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>(ci_quantile <span class="ot">&lt;-</span> <span class="fu">quantile</span>(boot_slopes, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>boot.slope <span class="ot">&lt;-</span> EG <span class="sc">|&gt;</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(ECV <span class="sc">~</span> Group_size) <span class="sc">|&gt;</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"slope"</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>boot.slope.summary <span class="ot">&lt;-</span> boot.slope <span class="sc">|&gt;</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">estimate =</span> <span class="fu">mean</span>(stat), <span class="at">std.error =</span> <span class="fu">sd</span>(stat), <span class="at">lower =</span> estimate <span class="sc">-</span> std.error <span class="sc">*</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>    critical_value, <span class="at">upper =</span> estimate <span class="sc">+</span> std.error <span class="sc">*</span> critical_value, <span class="at">boot.lower =</span> <span class="fu">quantile</span>(stat,</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>    p_lower), <span class="at">boot.upper =</span> <span class="fu">quantile</span>(stat, p_upper))</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Quantile Method</span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>boot.slope.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    2.5%    97.5% 
-1.491174 3.291500 </code></pre>
+<pre><code># A tibble: 1 × 6
+  estimate std.error lower upper boot.lower boot.upper
+     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+1     2.39     0.457  1.49  3.29       1.47       3.22</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Theory Method</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>(ci_theory <span class="ot">&lt;-</span> <span class="fu">c</span>(beta1 <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> (<span class="fu">sd</span>(boot_slopes)), beta1 <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> (<span class="fu">sd</span>(boot_slopes))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Percentil Method</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>(CI.percentile <span class="ot">&lt;-</span> <span class="fu">get_ci</span>(boot.slope, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> alpha, <span class="at">type =</span> <span class="st">"percentile"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.558510 3.367632</code></pre>
+<pre><code># A tibble: 1 × 2
+  lower_ci upper_ci
+     &lt;dbl&gt;    &lt;dbl&gt;
+1     1.47     3.22</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Theory Method</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>(CI.theory <span class="ot">&lt;-</span> <span class="fu">get_ci</span>(boot.slope, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> alpha, <span class="at">type =</span> <span class="st">"se"</span>, <span class="at">point_estimate =</span> <span class="fu">pull</span>(boot.slope.summary,</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    estimate)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  lower_ci upper_ci
+     &lt;dbl&gt;    &lt;dbl&gt;
+1     1.50     3.29</code></pre>
 </div>
 </div>
-<section id="do-these-cis-suggest-that-your-slope-coefficient-is-different-from-zero" class="level2">
-<h2 class="anchored" data-anchor-id="do-these-cis-suggest-that-your-slope-coefficient-is-different-from-zero">Do these CIs suggest that your slope coefficient is different from zero?</h2>
-<p>Yes they both suggest this.</p>
 </section>
+</section>
+<section id="do-these-cis-suggest-that-your-slope-coefficient-is-different-from-zero" class="level1">
+<h1>Do these CIs suggest that your slope coefficient is different from zero?</h1>
+<p>Yes these CIs suggest that the slope coefficient is different from zero.</p>
 </section>
 
 </main>

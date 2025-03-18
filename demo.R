@@ -211,14 +211,11 @@ for (i in 1:n) {
 
 n <- 10000
 
-# Compute original slope
 m_orig <- lm(ECV ~ Group_size, data = filtered_Group_size)
-beta1_obs <- coef(m_orig)["Group_size"]  # Original slope coefficient
+beta1_obs <- coef(m_orig)["Group_size"]  
 
-# Initialize vector to store permuted slopes
 perm_slopes <- numeric(n_permutations)
 
-# Permutation loop
 for (i in 1:n_permutations) {
   permuted_ECV <- sample(filtered_Group_size$ECV)  # Shuffle ECV
   perm_model <- lm(permuted_ECV ~ filtered_Group_size$Group_size)  # Fit model
@@ -231,14 +228,14 @@ for (i in 1:n_permutations) {
 
 
 
-perm <- vector(length = n)  # Preallocate vector for efficiency
+perm <- vector(length = n)  
 
 for (i in 1:n) {
-  perm_ECV <- sample(EG$ECV)  # Shuffle ECV values
+  perm_ECV <- sample(EG$ECV)  
   
-  perm_model <- lm(perm_ECV ~ EG$Group_size, data = EG)  # Correct variable reference
+  perm_model <- lm(perm_ECV ~ EG$Group_size, data = EG) 
   
-  perm[i] <- coef(perm_model)[2]  # Extract the coefficient for Group_size
+  perm[i] <- coef(perm_model)[2]
 }
 
 # Compute p-value (two-tailed)
@@ -271,7 +268,7 @@ p
 # Plot the null distribution
 hist(perm_slopes, breaks = 30, col = "lightblue", main = "Permutation-Based Null Distribution of Beta1",
      xlab = "Slope Coefficient (Beta1)")
-abline(v = beta1_obs, col = "red", lwd = 2, lty = 2)  # Mark observed beta1
+abline(v = beta1_obs, col = "red", lwd = 2, lty = 2)  
 
 
 
@@ -282,16 +279,16 @@ abline(v = beta1_obs, col = "red", lwd = 2, lty = 2)  # Mark observed beta1
 
 # Step 8 - bootstrapping
 
-n_boot <- 1000  # Number of bootstrap samples
+n_boot <- 1000  
 
-boot_slopes <- numeric(n_boot)  # Preallocate vector
+boot_slopes <- numeric(n_boot)  
 
-n <- nrow(EG)  # Get sample size
+n <- nrow(EG)  
 
 for (i in 1:n_boot) {
-  boot <- EG[sample(1:n, size = n, replace = TRUE), ]  # Resample entire data frame
-  boot_model <- lm(ECV ~ Group_size, data = boot)  # Fit model on bootstrap sample
-  boot_slopes[i] <- coef(boot_model)[2]  # Extract slope coefficient
+  boot <- EG[sample(1:n, size = n, replace = TRUE), ] 
+  boot_model <- lm(ECV ~ Group_size, data = boot)  
+  boot_slopes[i] <- coef(boot_model)[2]  
 }
 
 # Quantile Method
@@ -305,15 +302,11 @@ boot_se <- sd(boot_slopes)
 
 
 
-cat("Original Beta1:", beta1, "\n")
-cat("95% CI (Quantile Method):", ci_quantile, "\n")
-cat("95% CI (Theory-Based Method):", ci_theory, "\n")
 
 zero_in_ci_quantile <- ci_quantile[1] <= 0 & ci_quantile[2] >= 0
 zero_in_ci_theory <- ci_theory[1] <= 0 & ci_theory[2] >= 0
 
-cat("Zero in Quantile CI?", zero_in_ci_quantile, "\n")
-cat("Zero in Theory-Based CI?", zero_in_ci_theory, "\n")
+
 
 
 
@@ -342,8 +335,8 @@ p_value_beta1
 ci_beta1
 
 n <- nrow(d)  # Sample size
-residuals_squared <- sum(residuals(m)^2)  # Sum of squared residuals
-x_var <- sum((d$Group_size - mean(d$Group_size))^2)  # Variance in Group Size
+residuals_squared <- sum(residuals(m)^2)  
+x_var <- sum((d$Group_size - mean(d$Group_size))^2)  
 
 se_beta1_manual <- sqrt(residuals_squared / (n - 2) / x_var)
 se_beta1_manual
@@ -375,7 +368,7 @@ p_value_manual
 
 
 
-
+library(tidyr)
 
 summary(m)
 broom::tidy(m)
@@ -472,10 +465,83 @@ s = d |>
 
 
 # Step 7
+install.packages("infer")
+
+
+library(broom)
+library(infer)
+
+alpha <- 0.05
+confidence_level <- 1 - alpha
+p_lower <- alpha/2
+p_upper <- 1 - (alpha/2)
+degrees_of_freedom <- nrow(EG) - 2
+critical_value <- qt(p_upper, df = degrees_of_freedom)
+
+original.slope <- lm(data = EG, ECV ~ Group_size) |>
+  tidy(conf.int = TRUE, conf.level = confidence_level) |>
+  mutate(lower = estimate - std.error * critical_value, upper = estimate + std.error *
+           critical_value) |>
+  filter(term == "Group_size")
+
+permuted.slope <- EG |>
+  specify(ECV ~ Group_size) |>
+  hypothesize(null = "independence") |>
+  generate(reps = 1000, type = "permute") |>
+  calculate(stat = "slope")
+
+permuted.slope.summary <- permuted.slope |>
+  summarize(estimate = mean(stat), std.error = sd(stat), lower = estimate - std.error *
+              critical_value, upper = estimate + std.error * critical_value, perm.lower = quantile(stat,
+                                                                                                   p_lower), perm.upper = quantile(stat, p_upper))
+
+get_ci(permuted.slope, level = 1 - alpha, type = "percentile")
+
+get_ci(permuted.slope, level = 1 - alpha, type = "se", point_estimate = pull(permuted.slope.summary,
+                                                                             estimate))
+
+p.value <- permuted.slope |>
+  mutate(abs_stat = abs(stat)) |>
+  summarize(estimate = mean(abs_stat >= abs(pull(original.slope, estimate))))
+
+p.value
+
+(p.value <- permuted.slope |>
+    get_p_value(obs_stat = original.slope$estimate, direction = "two_sided"))
 
 
 
-# Step 8
+
+
+
+
+boot.slope <- EG |>
+  specify(ECV ~ Group_size) |>
+  generate(reps = 1000, type = "bootstrap") |>
+  calculate(stat = "slope")
+
+boot.slope.summary <- boot.slope |>
+  summarize(estimate = mean(stat), std.error = sd(stat), lower = estimate - std.error *
+              critical_value, upper = estimate + std.error * critical_value, boot.lower = quantile(stat,
+                                                                                                   p_lower), boot.upper = quantile(stat, p_upper))
+
+boot.slope.summary
+
+
+for (i in 1:n_boot) {
+  boot[[i]] <- mean(samples(EG, n, replace = TRUE))
+  # boot <- EG[sample(1:n, size = n, replace = TRUE), ]
+  # boot_model <- lm(ECV ~ Group_size, data = boot)
+  # boot_slopes[i] <- coef(boot_model)[2]
+}
+
+# Quantile Method
+(CI.percentile <- get_ci(boot.slope, level = 1 - alpha, type = "percentile"))
+
+# Theory Method
+(CI.theory <- get_ci(boot.slope, level = 1 - alpha, type = "se", point_estimate = pull(boot.slope.summary,
+                                                                                       estimate)))
+
 
 
 
